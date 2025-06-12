@@ -1,8 +1,9 @@
 {
     "name": "onda-utils",
     "private": true,
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "module",
+    "main": "index.ts",
     "scripts": {
         "dev": "rsbuild dev --env-mode localhost --port 50001 --open",
         "u": "npx npm-check-updates -u",
@@ -23,5 +24,16 @@
         "onda-types": "github:ondasegura/onda-types",
         "postcss": "^8.5.4",
         "tailwindcss": "^4.1.8"
-    }
+    },
+    "description": "🎉 start utils onda segura",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ondasegura/onda-utils.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ondasegura/onda-utils/issues"
+    },
+    "homepage": "https://github.com/ondasegura/onda-utils#readme"
 }
