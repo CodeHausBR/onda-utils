@@ -1,5 +1,5 @@
-const localStorage = class localStorage {
-    static adicionarItemLocalStorage(chave, novoItem) {
+const local_storage = class local_storage {
+    static adicionarItemlocal_storage(chave: string, novoItem: any) {
         try {
             const valorAtual = window.localStorage.getItem(chave);
             const listaAtual = valorAtual ? JSON.parse(valorAtual) : [];
@@ -9,31 +9,31 @@ const localStorage = class localStorage {
                 ...novoItem,
             };
             window.localStorage.setItem(chave, JSON.stringify(newDataItem));
-        } catch (error) {}
+        } catch (error) { }
     }
 
-    static setLocalStorageSemIncremento(chave, novoItem) {
+    static setlocal_storageSemIncremento(chave: string, novoItem: any) {
         try {
             window.localStorage.setItem(chave, JSON.stringify(novoItem));
-        } catch (error) {}
+        } catch (error) { }
     }
 
-    static getItemLocalStorage(chave) {
+    static getItemlocal_storage(chave: string) {
         try {
             if (typeof window !== "undefined") {
                 const valorAtual = window.localStorage.getItem(chave);
                 return valorAtual ? JSON.parse(valorAtual) : valorAtual;
             }
             return;
-        } catch (error) {}
+        } catch (error) { }
     }
 
-    static removerItemLocalStorage(chave) {
+    static removerItemlocal_storage(chave: string) {
         try {
             window.localStorage.removeItem(chave);
-        } catch (error) {}
+        } catch (error) { }
     }
 };
 
-// Para usar a classe, você pode fazer:
-export default localStorage;
+
+export default local_storage;

@@ -1,7 +1,7 @@
 {
     "name": "onda-utils",
     "private": true,
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "module",
     "scripts": {
         "dev": "rsbuild dev --env-mode localhost --port 50001 --open",
@@ -9,6 +9,8 @@
         "t": "npm install -D git+https://github.com/ondasegura/onda-types.git"
     },
     "dependencies": {
+        "lucide-react": "^0.513.0",
+        "zustand": "^5.0.5",
         "axios": "^1.9.0"
     },
     "devDependencies": {

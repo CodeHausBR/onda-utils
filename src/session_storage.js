@@ -1,5 +1,5 @@
-const sessionStorage = class sessionStorage {
-    static adicionarItemSessionStorage(chave, novoItem) {
+const session_storage = class session_storage {
+    static adicionar_item_session_storage(chave, novoItem) {
         try {
             const valorAtual = window.sessionStorage.getItem(chave);
             const listaAtual = valorAtual ? JSON.parse(valorAtual) : [];
@@ -14,7 +14,7 @@ const sessionStorage = class sessionStorage {
         }
     }
 
-    static setSessionStorageSemIncremento(chave, novoItem) {
+    static set_session_storage_sem_incremento(chave, novoItem) {
         try {
             window.sessionStorage.setItem(chave, JSON.stringify(novoItem));
         } catch (error) {
@@ -22,7 +22,7 @@ const sessionStorage = class sessionStorage {
         }
     }
 
-    static getItemSessionStorage(chave) {
+    static get_item_session_storage(chave) {
         try {
             if (typeof window !== "undefined") {
                 const valorAtual = window.sessionStorage.getItem(chave);
@@ -34,7 +34,7 @@ const sessionStorage = class sessionStorage {
         }
     }
 
-    static removerItemSessionStorage(chave) {
+    static remover_item_session_storage(chave) {
         try {
             window.sessionStorage.removeItem(chave);
         } catch (error) {
@@ -43,5 +43,4 @@ const sessionStorage = class sessionStorage {
     }
 };
 
-// Para usar a classe, você pode fazer:
-export default sessionStorage;
+export default session_storage;

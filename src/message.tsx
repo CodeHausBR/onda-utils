@@ -30,7 +30,7 @@ export interface MessageApiParams {
     autoHideDuration?: number;
 }
 
-const store = create<MessageStoreState>((set, get) => ({
+const store = create<MessageStoreState>(() => ({
     states: {
         notificacoes: {
             data: [],
@@ -54,13 +54,13 @@ const message = class message {
     static contexto = class contexto {
         static jsx = class jsx {
             static get_notificacoes(): ContextoPadrao<MessageNotification[]> {
-                return store((state) => state.states.notificacoes);
+                return store((state: any) => state.states.notificacoes);
             }
         };
 
         static state = class state {
             static set_notificacoes(notificacoesData: MessageNotification[] = []): void {
-                store.setState((state) => ({
+                store.setState((state: any) => ({
                     states: {
                         ...state.states,
                         notificacoes: {
@@ -72,12 +72,12 @@ const message = class message {
             }
 
             static remove_notificacao(id: string): void {
-                store.setState((state) => ({
+                store.setState((state: any) => ({
                     states: {
                         ...state.states,
                         notificacoes: {
                             ...state.states.notificacoes,
-                            data: state.states.notificacoes.data.filter((notificacao) => notificacao.id !== id),
+                            data: state.states.notificacoes.data.filter((notificacao: any) => notificacao.id !== id),
                         },
                     },
                 }));

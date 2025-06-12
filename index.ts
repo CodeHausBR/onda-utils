@@ -2,9 +2,9 @@ import api from "@/api";
 import data from "@/data";
 import form from "@/form";
 import geral from "@/geral";
-import localStorage from "@/localStorage";
-import updateContext from "@/updateContext";
-import sessionStorage from "@/sessionStorage";
+import local_storage from "@/local_storage";
+import update_context from "@/update_context";
+import sessionStorage from "@/session_storage";
 import message from "@/message";
 import sistema from "@/systema";
 
@@ -17,9 +17,9 @@ const utils = class utils {
 
     static geral = geral;
 
-    static localStorage = localStorage;
+    static local_storage = local_storage;
 
-    static updateContext = updateContext;
+    static update_context = update_context;
 
     static sessionStorage = sessionStorage;
 
