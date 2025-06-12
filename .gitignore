@@ -1,0 +1,20 @@
+# Local
+.DS_Store
+*.log*
+*.env.producao
+*.env.sandbox
+
+
+# Dist
+
+node_modules
+dist/
+
+# IDE
+
+!.vscode/extensions.json
+.idea
+
+package-lock.json
+
+
