@@ -25,6 +25,8 @@ git push -u origin producao
 
 # PADRÃO DO CRUD NAS CONTROLLERS E MODELS
 
+npm publish
+
 ```plaintext
 api:
 POST::   criar
@@ -69,7 +71,7 @@ acesso do parceiro advogados - ele vai receber as liminares -
         # Configuração do sistema
 
 -   Pagar o lucro do advogado, lucro do banco, lucro franqueado
--                                           # Consulta nome
+-                                             # Consulta nome
 
     1º Vai gerar um link no parme
     2º Depois que pagar Vai bater na API do analisando e retonar um PDF # Limpa nome
