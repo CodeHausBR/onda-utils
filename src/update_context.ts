@@ -115,7 +115,7 @@ const update_context = class update_context {
         return [...itensMantidos, ...itensNovos];
     }
 
-    static remover_item_pelo_id({ oldArray, itemToRemove, key = "_id" }: { oldArray: any[]; itemToRemove: any[]; key: string }) {
+    static remover_item_pelo_id({ oldArray, itemToRemove, key = "_id" }: { oldArray: any[]; itemToRemove: any; key?: string }) {
         try {
             // Se o array original estiver vazio ou nenhum item para remover, retorna o array original
             if (!oldArray?.length || !itemToRemove) return oldArray;
