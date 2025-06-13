@@ -22,7 +22,7 @@ const api = class api {
             try {
                 const queryParams = new URLSearchParams();
 
-                Object().entries(params).forEach(([key, value]: [key: any, value: any]) => {
+                Object.entries(params).forEach(([key, value]: [key: any, value: any]) => {
                     if (value !== null && value !== undefined) {
                         queryParams.append(key, value as string);
                     }
