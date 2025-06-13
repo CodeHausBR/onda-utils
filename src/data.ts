@@ -1,5 +1,5 @@
 const data = class data {
-    static YYYY_MM_DD_00_00_00(newData) {
+    static YYYY_MM_DD_00_00_00(newData: string) {
         let dataAtual = new Date();
         if (newData) {
             dataAtual = new Date(newData);
@@ -20,7 +20,7 @@ const data = class data {
         return `${ano}-${mes}-${dia} ${hora}`;
     }
 
-    static DD_MM_YYYY_00_00_00(newData) {
+    static DD_MM_YYYY_00_00_00(newData: string) {
         let dataAtual = new Date();
         if (newData) {
             dataAtual = new Date(newData);
@@ -38,7 +38,7 @@ const data = class data {
         return dataAtual.toLocaleString("pt-BR", options);
     }
 
-    static DD_MM_YYYY_00_00(newData) {
+    static DD_MM_YYYY_00_00(newData: string) {
         let dataAtual = new Date();
         if (newData) {
             dataAtual = new Date(newData);
@@ -56,7 +56,7 @@ const data = class data {
         return dataFormatada;
     }
 
-    static DD_MM_YYYY(newData) {
+    static DD_MM_YYYY(newData: string) {
         let dataAtual = new Date();
         if (newData) {
             dataAtual = new Date(newData);
@@ -71,7 +71,7 @@ const data = class data {
         return dataAtual.toLocaleString("pt-BR", options);
     }
 
-    static YYYY_MM_DD(newData) {
+    static YYYY_MM_DD(newData: string) {
         let dataAtual = new Date();
         if (newData) {
             dataAtual = new Date(newData);
@@ -92,14 +92,14 @@ const data = class data {
         return `${ano}-${mes}-${dia}`;
     }
 
-    static DIFERENCA_SEGUNDOS(data) {
+    static DIFERENCA_SEGUNDOS(data: string) {
         var dataInicial = new Date(data);
         var dataAtual = new Date();
         var diferenca = dataAtual - dataInicial;
         var diferencaEmSegundos = Math.floor(diferenca / 1000);
         return diferencaEmSegundos;
     }
-    static DIFERENCA_DIAS(data) {
+    static DIFERENCA_DIAS(data: string) {
         var dataInicial = new Date(data);
         var dataAtual = new Date();
         var diferenca = dataAtual.getTime() - dataInicial.getTime(); // Obtém a diferença em milissegundos

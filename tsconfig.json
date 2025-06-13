@@ -5,11 +5,14 @@
         "module": "ESNext",
         "moduleResolution": "node",
 
+        // Configuração JSX necessária
+        "jsx": "react-jsx",
+
         // Configurações para bibliotecas
         "declaration": true,
         "declarationMap": true,
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": "./",
 
         // Compatibilidade
         "esModuleInterop": true,
@@ -23,6 +26,6 @@
         "resolveJsonModule": true,
         "isolatedModules": true
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
