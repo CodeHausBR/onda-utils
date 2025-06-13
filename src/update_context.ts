@@ -114,6 +114,35 @@ const update_context = class update_context {
         // Combina os arrays
         return [...itensMantidos, ...itensNovos];
     }
+
+    static remover_item_pelo_id({ oldArray, itemToRemove, key = "_id" }: { oldArray: any[]; itemToRemove: any[]; key: string }) {
+        try {
+            // Se o array original estiver vazio ou nenhum item para remover, retorna o array original
+            if (!oldArray?.length || !itemToRemove) return oldArray;
+
+            // Converte itemToRemove para array de IDs se necessário
+            const idsToRemove = Array.isArray(itemToRemove)
+                ? itemToRemove.map((item) => (typeof item === "object" ? item[key] : item))
+                : [typeof itemToRemove === "object" ? itemToRemove[key] : itemToRemove];
+
+            // Remove valores undefined/null do array de IDs
+            const validIdsToRemove = idsToRemove.filter((id) => id != null);
+
+            // Se não há IDs válidos para remover, retorna o array original
+            if (validIdsToRemove.length === 0) return oldArray;
+
+            // Cria cópia profunda do array para não modificar o original
+            const updatedArray = JSON.parse(JSON.stringify(oldArray));
+
+            // Filtra o array removendo os itens com os IDs especificados
+            const filteredArray = updatedArray.filter((item: any) => !validIdsToRemove.includes(item?.[key]));
+
+            return filteredArray;
+        } catch (error) {
+            console.error("Erro ao remover item do array!", error);
+            return oldArray;
+        }
+    }
 };
 
 export default update_context;
