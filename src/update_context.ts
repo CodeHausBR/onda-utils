@@ -9,7 +9,7 @@
 const update_context = class update_context {
 
 
-    static set_new_item_end = ({ oldArray = [], newItem = [], key = "_id" }) => {
+    static set_new_item_end = ({ oldArray = [] as any, newItem = [] as any, key = "_id" as string }) => {
         try {
             const hasValidIds = Array.isArray(newItem) ? newItem.every((item) => item?.[key]) : newItem?.[key];
             const newItemArray = hasValidIds ? (Array.isArray(newItem) ? newItem : [newItem]) : oldArray;
@@ -42,7 +42,7 @@ const update_context = class update_context {
         }
     };
 
-    static update_array_itens = ({ oldArray = [], newItem = [], key = "_id" }) => {
+    static update_array_itens = ({ oldArray = [] as any, newItem = [] as any, key = "_id" as string }) => {
         try {
             const hasValidIds = Array.isArray(newItem) ? newItem.every((item) => item?.[key]) : newItem?.[key];
             const newItemArray = hasValidIds ? (Array.isArray(newItem) ? newItem : [newItem]) : oldArray;
@@ -75,7 +75,7 @@ const update_context = class update_context {
     };
 
 
-    static remove_array_items = ({ oldArray = [], itemsToRemove = [], key = "_id" }) => {
+    static remove_array_items = ({ oldArray = [] as any, itemsToRemove = [] as any, key = "_id" as string, }) => {
         try {
             // Verifica se os argumentos são válidos
             if (!Array.isArray(oldArray) || oldArray.length === 0) return oldArray;
