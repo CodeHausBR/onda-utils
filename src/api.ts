@@ -1,7 +1,7 @@
 import axios from "axios";
 import t from "onda-types";
 //HOOKS
-import utils from ".";
+import utils from "index";
 
 //UTILS
 
@@ -124,7 +124,7 @@ const api = class api {
         params = params || {};
         const content_type = params?.content_type;
 
-        const get_auth_user = utils.sessionStorage.getItemSessionStorage("auth_user");
+        const get_auth_user = utils.session_storage.get_item_session_storage("auth_user");
 
         return {
             headers: {
@@ -134,7 +134,7 @@ const api = class api {
         };
     }
     static usuario_auth(): t.Banco.Controllers.Usuario.AuthFront {
-        const get_auth_user = utils.sessionStorage.getItemSessionStorage("auth_user");
+        const get_auth_user = utils.session_storage.get_item_session_storage("auth_user");
 
         return get_auth_user;
     }

@@ -105,7 +105,7 @@ const geral = class geral {
             return newItem;
         });
 
-        return dados
+        return dados as OutputArray[]
     }
 };
 
