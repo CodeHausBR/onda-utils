@@ -1,7 +1,7 @@
 import axios from "axios";
 import t from "onda-types";
 //HOOKS
-import utils from "index";
+import utils_message from "./message";
 
 //UTILS
 
@@ -17,10 +17,10 @@ const api = class api {
         static async post(url: string, data: object, message: boolean = true) {
             try {
                 const response = await this.axios.post(url, data, api.headers());
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response.data;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
 
@@ -38,10 +38,10 @@ const api = class api {
                 const fullUrl = queryString ? `${url}?${queryString}` : url;
 
                 const response = await this.axios.get(fullUrl, api.headers());
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response.data;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
 
@@ -50,20 +50,20 @@ const api = class api {
                 const response = await this.axios.patch(url, data, api.headers());
 
 
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response.data;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
 
         static async delete(url: string, config = {}, message = true) {
             try {
                 const response = await this.axios.delete(url, api.headers());
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response.data;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
     };
@@ -76,40 +76,40 @@ const api = class api {
         static async post(url: string, data: object, message: boolean) {
             try {
                 const response = await this.axios.post(url, data, api.headers({ content_type: "multipart/form-data" }));
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
 
         static async get(url: string, message = true) {
             try {
                 const response = await this.axios.get(url, api.headers({ content_type: "multipart/form-data" }));
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
 
         static async put(url: string, data: object, config = {}, message = true) {
             try {
                 const response = await this.axios.put(url, data, api.headers({ content_type: "multipart/form-data" }));
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
 
         static async delete(url: string, config = {}, message = true) {
             try {
                 const response = await this.axios.delete(url, config);
-                if (message === true) utils.message.api(response?.data);
+                if (message === true) utils_message.api(response?.data);
                 return response;
             } catch (error: any) {
-                utils.message.api(error?.response?.data);
+                utils_message.api(error?.response?.data);
             }
         }
     };
