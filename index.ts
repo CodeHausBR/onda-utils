@@ -1,12 +1,12 @@
-import api from "./src/api"
-import data from "./src/data";
-import form from "./src/form";
-import geral from "./src/geral";
-import local_storage from "./src/local_storage";
-import update_context from "./src/update_context";
-import session_storage from "./src/session_storage";
-import message from "./src/message";
-import sistema from "./src/systema";
+import api from "@/api"
+import data from "@/data";
+import form from "@/form";
+import geral from "@/geral";
+import local_storage from "@/local_storage";
+import update_context from "@/update_context";
+import session_storage from "@/session_storage";
+import message from "@/message";
+import sistema from "@/systema";
 
 const utils = class utils {
     static api = api;
