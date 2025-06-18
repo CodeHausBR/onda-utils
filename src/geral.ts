@@ -41,7 +41,7 @@ const geral = class geral {
         return ids;
     }
 
-    static gerar_id = (length = 32) => {
+    static gerar_id = (length: number = 32) => {
         // Caracteres permitidos (apenas alfanuméricos)
         const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -71,7 +71,7 @@ const geral = class geral {
         return finalResult.substring(0, length);
     };
 
-    static formatar_array_objetos_para_array_de_id_value(input: object[], output: OutputArray): OutputArray[] {
+    static formatar_array_objetos_para_array_de_id_value(input: object[], output: OutputArray | any): OutputArray[] {
         // Verifica se o input é um array
         if (!Array.isArray(input)) {
             throw new Error('Input deve ser um array');
@@ -86,12 +86,12 @@ const geral = class geral {
         const outputKeys = Object.keys(output);
 
         // Mapeia o array de entrada
-        const dados = input.map(item => {
+        const dados = input.map((item: any) => {
             const newItem: Record<string, any> = {};
 
             // Para cada chave no objeto output
             outputKeys.forEach(newKey => {
-                const originalKey = output[newKey];
+                const originalKey: any = output[newKey];
 
                 // Verifica se a chave original existe no item
                 if (item.hasOwnProperty(originalKey)) {

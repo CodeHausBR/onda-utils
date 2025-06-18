@@ -5,7 +5,7 @@ const data = class data {
             dataAtual = new Date(newData);
         }
 
-        const options = {
+        const options: any = {
             timeZone: "America/Sao_Paulo",
             year: "numeric",
             month: "numeric",
@@ -15,7 +15,7 @@ const data = class data {
             second: "numeric",
         };
         const horarioFormatado = dataAtual.toLocaleString("pt-BR", options);
-        const [data, hora] = horarioFormatado.split(" " && ",");
+        const [data, hora] = horarioFormatado.split(/[ ,]+/);
         const [dia, mes, ano] = data.split("/");
         return `${ano}-${mes}-${dia} ${hora}`;
     }
@@ -26,7 +26,7 @@ const data = class data {
             dataAtual = new Date(newData);
         }
 
-        const options = {
+        const options: any = {
             timeZone: "America/Sao_Paulo",
             year: "numeric",
             month: "numeric",
@@ -44,7 +44,7 @@ const data = class data {
             dataAtual = new Date(newData);
         }
 
-        const options = {
+        const options: any = {
             timeZone: "America/Sao_Paulo",
             year: "numeric",
             month: "numeric",
@@ -62,7 +62,7 @@ const data = class data {
             dataAtual = new Date(newData);
         }
 
-        const options = {
+        const options: any = {
             timeZone: "America/Sao_Paulo",
             year: "numeric",
             month: "numeric",
@@ -77,7 +77,7 @@ const data = class data {
             dataAtual = new Date(newData);
         }
 
-        const options = {
+        const options: any = {
             timeZone: "America/Sao_Paulo",
             year: "numeric",
             month: "numeric",
@@ -87,14 +87,14 @@ const data = class data {
             second: "numeric",
         };
         const horarioFormatado = dataAtual.toLocaleString("pt-BR", options);
-        const [data] = horarioFormatado.split(" " && ",");
+        const [data] = horarioFormatado.split(/[ ,]+/);
         const [dia, mes, ano] = data.split("/");
         return `${ano}-${mes}-${dia}`;
     }
 
     static DIFERENCA_SEGUNDOS(data: string) {
-        var dataInicial = new Date(data);
-        var dataAtual = new Date();
+        var dataInicial: any = new Date(data);
+        var dataAtual: any = new Date();
         var diferenca = dataAtual - dataInicial;
         var diferencaEmSegundos = Math.floor(diferenca / 1000);
         return diferencaEmSegundos;
