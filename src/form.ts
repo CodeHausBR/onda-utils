@@ -1,5 +1,6 @@
 class form {
     static regexCpfCnpj(value: string) {
+        if (typeof value !== "string") return ""
         let tempValue = value.replace(/\D/g, "");
 
         if (tempValue.length > 14) {
@@ -29,6 +30,7 @@ class form {
     }
 
     static formatCPF(value: string) {
+        if (typeof value !== "string") return ""
         const cpf_cnpj = value.replace(/\D/g, "");
         if (cpf_cnpj.length > 11) {
             return cpf_cnpj.slice(0, 11);
@@ -43,6 +45,7 @@ class form {
     }
 
     static formatCNPJ(value: string) {
+        if (typeof value !== "string") return ""
         const cnpj = value.replace(/\D/g, "");
         if (cnpj.length > 14) {
             return cnpj.slice(0, 14);
@@ -58,6 +61,7 @@ class form {
     }
 
     static formatar_cpf_cnpj(value: string): string {
+        if (typeof value !== "string") return ""
         const cleanValue = value.replace(/\D/g, "");
 
         if (cleanValue.length <= 11) {
@@ -73,7 +77,10 @@ class form {
 
 
     static formatar_cep(value: string) {
+        if (typeof value !== "string") return ""
+
         const cep = value.replace(/\D/g, "");
+
         if (cep.length > 8) {
             return cep.slice(0, 8);
         }
@@ -84,7 +91,10 @@ class form {
     }
 
     static formatar_telefone_fixo(value: string) {
+        if (typeof value !== "string") return ""
+
         const telefone = value.replace(/\D/g, "");
+
         if (telefone.length > 10) {
             return telefone.slice(0, 10);
         }
@@ -98,7 +108,10 @@ class form {
     }
 
     static formatar_celular(value: string) {
+        if (typeof value !== "string") return ""
+
         const celular = value.replace(/\D/g, "");
+
         if (celular.length > 11) {
             return celular.slice(0, 11);
         }
@@ -112,7 +125,7 @@ class form {
     }
 
     static formatar_nomes(name: string) {
-
+        if (typeof name !== "string") return ""
         if (!name) return ""
 
         const lowercaseWords = ["de", "da", "do", "das", "dos", "e", "a", "o"];
@@ -132,6 +145,7 @@ class form {
     }
 
     static formatar_reais(value: string) {
+        if (typeof value !== "string") return ""
         let num = value.replace(/\D/g, "");
         return new Intl.NumberFormat("pt-BR", {
             style: "currency",
