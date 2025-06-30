@@ -7,9 +7,12 @@ import update_context from "./src/update_context";
 import session_storage from "./src/session_storage";
 import message from "./src/message";
 import sistema from "./src/systema";
+import controller from "./src/controller";
 
 const utils = class utils {
     static api = api;
+
+    static controller = controller;
 
     static data = data;
 
