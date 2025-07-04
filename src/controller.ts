@@ -133,6 +133,17 @@ class controller<TController extends ControllerActions, TEntidade extends string
                                 total_paginas: state_entidade.pagina.paginacao.total_paginas
                             }
                         };
+                        state_entidade.pagina_mini_select = {
+                            item_selecionado: newItem,
+                            itens: utils.update_context.update_array_itens({ oldArray: state_entidade.pagina.itens, newItem: newItem }),
+                            loading: false,
+                            paginacao: {
+                                itens_por_pagina: state_entidade.pagina.paginacao.itens_por_pagina + 1,
+                                total_itens: state_entidade.pagina.paginacao.total_itens + 1,
+                                total_itens_pagina_atual: state_entidade.pagina.paginacao.total_itens_pagina_atual + 1,
+                                total_paginas: state_entidade.pagina.paginacao.total_paginas
+                            }
+                        };
                     });
                 }
 
@@ -144,6 +155,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
         buscar_pelo_filtro: async (props: TController['BuscarPeloFiltro']['Input']) => {
             this.set_state((state_entidade) => {
                 state_entidade.pagina.loading = true;
+                state_entidade.pagina_mini_select.loading = true;
             });
 
             try {
@@ -153,21 +165,29 @@ class controller<TController extends ControllerActions, TEntidade extends string
                     true,
                     (props as any)?.filtros?.[this.entidade] || {}
                 );
-                const results = (data as any)?.results?.data;
+                const results: TController['BuscarPeloFiltro']['Output'] = (data as any)?.results?.data;
 
                 if (results?.[this.entidade]) {
                     this.set_state((state_entidade) => {
-                        state_entidade.pagina.paginacao.itens_por_pagina = results?.paginacao?.itens_por_pagina ?? 0;
-                        state_entidade.pagina.paginacao.total_itens = results?.paginacao?.total_itens ?? 0;
-                        state_entidade.pagina.paginacao.total_itens_pagina_atual = results?.paginacao?.total_itens_pagina_atual ?? 0;
-                        state_entidade.pagina.paginacao.total_paginas = results?.paginacao?.total_paginas ?? 0;
-                        state_entidade.pagina.itens = results?.[this.entidade];
-                        state_entidade.pagina.loading = false;
+                        //PAGINA
+                        state_entidade.pagina = {
+                            paginacao: results?.paginacao,
+                            itens: results?.[this.entidade] || [],
+                            loading: false,
+                        };
+                        //PAGINA MINI
+                        state_entidade.pagina_mini_select = {
+                            paginacao: results?.paginacao,
+                            itens: results?.[this.entidade] || [],
+                            loading: false,
+                            item_selecionado: {}
+                        }
                     });
                 }
             } finally {
                 this.set_state((state_entidade) => {
                     state_entidade.pagina.loading = false;
+                    state_entidade.pagina_mini_select.loading = false;
                 });
             }
         },
