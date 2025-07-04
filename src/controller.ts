@@ -7,10 +7,10 @@ const PUBLIC_BASE_URL_BACKEND = process.env.PUBLIC_BASE_URL_BACKEND;
 interface EntityState {
     modal: {
         item: any;
-        loading?: boolean;
+        loading: boolean;
     };
     pagina: {
-        loading?: boolean;
+        loading: boolean;
         itens: any[];
         paginacao: {
             total_itens: number;
@@ -31,11 +31,11 @@ interface EntityState {
         };
     };
     formulario: {
-        open?: boolean;
+        open: boolean;
         item: any;
-        progress?: number;
-        loading?: boolean;
-        loading_submit?: boolean;
+        progress: number;
+        loading: boolean;
+        loading_submit: boolean;
     };
 }
 
@@ -56,6 +56,7 @@ export interface ControllerActions {
 
 const criar_entidade_virtual = (): EntityState => ({
     modal: {
+        loading: false,
         item: {} as any
     },
     pagina: {
@@ -83,7 +84,8 @@ const criar_entidade_virtual = (): EntityState => ({
         item: {} as any,
         open: false,
         loading: false,
-        loading_submit: false
+        loading_submit: false,
+        progress: 0
     }
 });
 
