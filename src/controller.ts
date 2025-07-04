@@ -70,8 +70,8 @@ const criar_entidade_virtual = (): EntityState => ({
     },
     pagina_mini_select: {
         loading: false,
-        itens: [],
-        item: {},
+        itens: [] as any,
+        item: {} as any,
         paginacao: {
             total_itens: 0,
             total_paginas: 10,
