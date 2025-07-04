@@ -19,6 +19,17 @@ interface EntityState {
             itens_por_pagina: number;
         };
     };
+    pagina_mini_select: {
+        loading: boolean;
+        itens: any[];
+        item: any;
+        paginacao: {
+            total_itens: number;
+            total_paginas: number;
+            total_itens_pagina_atual: number;
+            itens_por_pagina: number;
+        };
+    };
     formulario: {
         open?: boolean;
         item: any;
@@ -56,6 +67,17 @@ const criar_entidade_virtual = (): EntityState => ({
             total_itens_pagina_atual: 0,
             itens_por_pagina: 0
         }
+    },
+    pagina_mini_select: {
+        loading: false,
+        itens: [],
+        item: {},
+        paginacao: {
+            total_itens: 0,
+            total_paginas: 10,
+            total_itens_pagina_atual: 0,
+            itens_por_pagina: 0
+        },
     },
     formulario: {
         item: {} as any,
