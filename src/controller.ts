@@ -22,7 +22,7 @@ interface EntityState {
     pagina_mini_select: {
         loading: boolean;
         itens: any[];
-        item: any;
+        item_selecionado: any;
         paginacao: {
             total_itens: number;
             total_paginas: number;
@@ -71,7 +71,7 @@ const criar_entidade_virtual = (): EntityState => ({
     pagina_mini_select: {
         loading: false,
         itens: [] as any,
-        item: {} as any,
+        item_selecionado: {} as any,
         paginacao: {
             total_itens: 0,
             total_paginas: 10,
