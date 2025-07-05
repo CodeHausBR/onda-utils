@@ -32,7 +32,8 @@ interface EntityState {
     };
     formulario: {
         open: boolean;
-        item: any;
+        criar: any;
+        atualizar: any;
         progress: number;
         loading: boolean;
         loading_submit: boolean;
@@ -81,7 +82,8 @@ const criar_entidade_virtual = (): EntityState => ({
         },
     },
     formulario: {
-        item: {} as any,
+        criar: {} as any,
+        atualizar: {} as any,
         open: false,
         loading: false,
         loading_submit: false,
@@ -212,7 +214,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 if (item) {
                     this.set_state((state_entidade) => {
                         state_entidade.modal.item = item;
-                        state_entidade.formulario.item = item;
+                        state_entidade.formulario.atualizar = item;
                     });
                 }
             } finally {
