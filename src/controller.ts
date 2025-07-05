@@ -51,7 +51,7 @@ export interface ControllerActions {
     BuscarPeloFiltro: { Input: any; Output: any };
     BuscarPeloId: { Input: any; Output: any };
     AtualizarPeloId: { Input: any; Output: any };
-    DeletarPeloId: { Input: any; Output: any };
+    DeletarPeloId: { Input: { data: { _id: string } }; Output: any };
     states: EntityState;
 }
 
@@ -261,14 +261,11 @@ class controller<TController extends ControllerActions, TEntidade extends string
                     state_entidade.modal.loading = true;
                 });
 
-                await utils.api.servidor_backend.delete(
-                    String(PUBLIC_BASE_URL_BACKEND),
-                    `${this.entidade}/${(props as any)._id}`
-                );
+                await utils.api.servidor_backend.delete(String(PUBLIC_BASE_URL_BACKEND), `${this.entidade}/${props.data._id}`);
 
                 const update_itens = utils.update_context.remover_item_pelo_id({
                     oldArray: this.get_state.pagina.itens as [],
-                    itemToRemove: { _id: (props as any)._id }
+                    itemToRemove: { _id: props.data._id }
                 });
 
                 this.set_state((state_entidade) => {
