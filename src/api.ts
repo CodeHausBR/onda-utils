@@ -127,10 +127,11 @@ const api = class api {
         const content_type = params?.content_type;
 
         const get_auth_user = utils.session_storage.get_item_session_storage("auth_user");
+        const get_auth_user_local = utils.local_storage.getItemlocal_storage("auth_user");
 
         return {
             headers: {
-                Authorization: `Bearer ${get_auth_user?.token}`,
+                Authorization: `Bearer ${get_auth_user?.token || get_auth_user_local?.token}`,
                 "Content-type": content_type || "application/json",
             },
         };

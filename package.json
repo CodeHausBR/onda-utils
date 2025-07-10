@@ -1,7 +1,7 @@
 {
     "name": "onda-utils",
     "private": false,
-    "version": "1.28.1",
+    "version": "1.29.1",
     "type": "module",
     "main": "index.ts",
     "scripts": {
