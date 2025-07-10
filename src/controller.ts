@@ -2,7 +2,12 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import utils from "..";
 
-const PUBLIC_BASE_URL_BACKEND = process.env.PUBLIC_BASE_URL_BACKEND;
+type Env = 'producao' | "desenvolvimento"
+
+const PUBLIC_NODE_ENV: Env = process.env.PUBLIC_NODE_ENV as Env
+
+type Servidores = "wave" | "worker_financeiro" | "portal"
+
 
 interface EntityState {
     modal: {
@@ -100,13 +105,16 @@ const store = create<ZustandStore>()(
 
 interface ControllerProps {
     entidade: string;
+    servidor: Servidores
 }
 
 class controller<TController extends ControllerActions, TEntidade extends string = string> {
     private entidade: TEntidade;
+    private servidor: Servidores;
 
-    constructor({ entidade }: ControllerProps) {
+    public constructor({ entidade, servidor }: ControllerProps) {
         this.entidade = entidade as TEntidade;
+        this.servidor = servidor as Servidores;
 
         const currentState = store.getState();
         if (!currentState.states[this.entidade]) {
@@ -116,12 +124,32 @@ class controller<TController extends ControllerActions, TEntidade extends string
         }
     }
 
-    api = {
+    private acessar_servidor() {
+        if (PUBLIC_NODE_ENV?.toLowerCase() === "producao") {//PRODUCAO  
+            const servidor = {
+                wave: "https://api-wave.ondasegura.com.br",
+                worker_financeiro: "https://api-financeiro.ondasegura.com.br",
+                portal: "https://api-portal.ondasegura.com.br"
+            }
+
+            return servidor[this.servidor]
+        } else { //SANDBOX
+            const servidor = {
+                wave: "https://api-sandbox-wave.ondasegura.com.br",
+                worker_financeiro: "https://api-sandbox-financeiro.ondasegura.com.br",
+                portal: "https://api-sandbox-portal.ondasegura.com.br"
+            }
+
+            return servidor[this.servidor]
+        }
+    }
+
+    public api = {
         criar: async (props: TController['Criar']['Input']) => {
             try {
                 this.set_state((state_entidade) => { state_entidade.formulario.loading = true });
 
-                const data: TController['Criar']['Output'] = await utils.api.servidor_backend.post(String(PUBLIC_BASE_URL_BACKEND), this.entidade, props, false);
+                const data: TController['Criar']['Output'] = await utils.api.servidor_backend.post(this.acessar_servidor(), this.entidade, props, false);
 
                 const newItem = (data as any)?.results?.data?.[this.entidade];
 
@@ -164,7 +192,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
 
             try {
                 const data: TController['BuscarPeloFiltro']['Output'] = await utils.api.servidor_backend.get(
-                    String(PUBLIC_BASE_URL_BACKEND),
+                    this.acessar_servidor(),
                     this.entidade,
                     true,
                     (props as any)?.filtros?.[this.entidade] || {}
@@ -204,7 +232,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 });
 
                 const data: TController['BuscarPeloId']['Output'] = await utils.api.servidor_backend.get(
-                    String(PUBLIC_BASE_URL_BACKEND),
+                    this.acessar_servidor(),
                     `${this.entidade}/${(props as any).data._id}`,
                     true,
                     {}
@@ -231,7 +259,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
 
                 const id = (props as any).data[this.entidade]._id;
                 const data: TController['AtualizarPeloId']['Output'] = await utils.api.servidor_backend.patch(
-                    String(PUBLIC_BASE_URL_BACKEND),
+                    this.acessar_servidor(),
                     `${this.entidade}/${id}`,
                     { data: (props as any).data },
                     true
@@ -261,7 +289,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
                     state_entidade.modal.loading = true;
                 });
 
-                await utils.api.servidor_backend.delete(String(PUBLIC_BASE_URL_BACKEND), `${this.entidade}/${props.data._id}`);
+                await utils.api.servidor_backend.delete(this.acessar_servidor(), `${this.entidade}/${props.data._id}`);
 
                 const update_itens = utils.update_context.remover_item_pelo_id({
                     oldArray: this.get_state.pagina.itens as [],
@@ -286,15 +314,15 @@ class controller<TController extends ControllerActions, TEntidade extends string
         }
     };
 
-    get get_jsx(): TController['states'] {
+    public get get_jsx(): TController['states'] {
         return store().states[this.entidade] || criar_entidade_virtual();
     }
 
-    get get_state(): TController['states'] {
+    public get get_state(): TController['states'] {
         return store.getState().states[this.entidade] || criar_entidade_virtual();
     }
 
-    set_state = (updater: (state_entidade: EntityState) => void) => {
+    public set_state = (updater: (state_entidade: EntityState) => void) => {
         store.setState((state) => {
             if (!state.states[this.entidade]) {
                 state.states[this.entidade] = criar_entidade_virtual();
