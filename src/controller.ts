@@ -128,7 +128,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
         if (PUBLIC_NODE_ENV?.toLowerCase() === "producao") {//PRODUCAO  
             const servidor = {
                 wave: "https://api-wave.ondasegura.com.br",
-                worker_financeiro: "https://api-financeiro.ondasegura.com.br",
+                worker_financeiro: "https://api-financeiro.ondasegura.com.br/financeiro",
                 portal: "https://api-portal.ondasegura.com.br"
             }
 
@@ -136,7 +136,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
         } else { //SANDBOX
             const servidor = {
                 wave: "https://api-sandbox-wave.ondasegura.com.br",
-                worker_financeiro: "https://api-sandbox-financeiro.ondasegura.com.br",
+                worker_financeiro: "https://api-sandbox-financeiro.ondasegura.com.br/financeiro",
                 portal: "https://api-sandbox-portal.ondasegura.com.br"
             }
 
