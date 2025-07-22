@@ -149,7 +149,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
             try {
                 this.set_state((state_entidade) => { state_entidade.formulario.loading = true });
 
-                const data: TController['Criar']['Output'] = await utils.api.servidor_backend.post(this.acessar_servidor(), this.entidade, props, false);
+                const data: TController['Criar']['Output'] = await utils.api.servidor_backend.post(this.acessar_servidor(), this.entidade, props, true);
 
                 const newItem = (data as any)?.results?.data?.[this.entidade];
 
