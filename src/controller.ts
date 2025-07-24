@@ -1,18 +1,18 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import {create} from "zustand";
+import {immer} from "zustand/middleware/immer";
 import utils from "..";
 
-type Env = 'producao' | "desenvolvimento"
+type Env = "producao" | "desenvolvimento";
 
-const PUBLIC_NODE_ENV: Env = process.env.PUBLIC_NODE_ENV as Env
+const PUBLIC_NODE_ENV: Env = process.env.PUBLIC_NODE_ENV as Env;
 
-type Servidores = "wave" | "worker_financeiro" | "portal"
-
+type Servidores = "wave" | "worker_financeiro" | "portal";
 
 interface EntityState {
     modal: {
         item: any;
         loading: boolean;
+        open: boolean;
     };
     pagina: {
         loading: boolean;
@@ -52,18 +52,19 @@ interface ZustandStore {
 }
 
 export interface ControllerActions {
-    Criar: { Input: any; Output: any };
-    BuscarPeloFiltro: { Input: any; Output: any };
-    BuscarPeloId: { Input: any; Output: any };
-    AtualizarPeloId: { Input: any; Output: any };
-    DeletarPeloId: { Input: { data: { _id: string } }; Output: any };
+    Criar: {Input: any; Output: any};
+    BuscarPeloFiltro: {Input: any; Output: any};
+    BuscarPeloId: {Input: any; Output: any};
+    AtualizarPeloId: {Input: any; Output: any};
+    DeletarPeloId: {Input: {data: {_id: string}}; Output: any};
     states: EntityState;
 }
 
 const criar_entidade_virtual = (): EntityState => ({
     modal: {
         loading: false,
-        item: {} as any
+        item: {} as any,
+        open: false,
     },
     pagina: {
         itens: [],
@@ -72,8 +73,8 @@ const criar_entidade_virtual = (): EntityState => ({
             total_itens: 0,
             total_paginas: 10,
             total_itens_pagina_atual: 0,
-            itens_por_pagina: 0
-        }
+            itens_por_pagina: 0,
+        },
     },
     pagina_mini_select: {
         loading: false,
@@ -83,7 +84,7 @@ const criar_entidade_virtual = (): EntityState => ({
             total_itens: 0,
             total_paginas: 10,
             total_itens_pagina_atual: 0,
-            itens_por_pagina: 0
+            itens_por_pagina: 0,
         },
     },
     formulario: {
@@ -92,27 +93,26 @@ const criar_entidade_virtual = (): EntityState => ({
         open: false,
         loading: false,
         loading_submit: false,
-        progress: 0
-    }
+        progress: 0,
+    },
 });
-
 
 const store = create<ZustandStore>()(
     immer((set) => ({
-        states: {}
+        states: {},
     }))
 );
 
 interface ControllerProps {
     entidade: string;
-    servidor: Servidores
+    servidor: Servidores;
 }
 
 class controller<TController extends ControllerActions, TEntidade extends string = string> {
     private entidade: TEntidade;
     private servidor: Servidores;
 
-    public constructor({ entidade, servidor }: ControllerProps) {
+    public constructor({entidade, servidor}: ControllerProps) {
         this.entidade = entidade as TEntidade;
         this.servidor = servidor as Servidores;
 
@@ -125,79 +125,85 @@ class controller<TController extends ControllerActions, TEntidade extends string
     }
 
     private acessar_servidor() {
-        if (PUBLIC_NODE_ENV?.toLowerCase() === "producao") {//PRODUCAO  
+        if (PUBLIC_NODE_ENV?.toLowerCase() === "producao") {
+            //PRODUCAO
             const servidor = {
                 wave: "https://api-wave.ondasegura.com.br",
                 worker_financeiro: "https://api-financeiro.ondasegura.com.br/financeiro",
-                portal: "https://api-portal.ondasegura.com.br"
-            }
+                portal: "https://api-portal.ondasegura.com.br",
+            };
 
-            return servidor[this.servidor]
-        } else { //SANDBOX
+            return servidor[this.servidor];
+        } else {
+            //SANDBOX
             const servidor = {
                 wave: "https://api-sandbox-wave.ondasegura.com.br",
                 worker_financeiro: "https://api-sandbox-financeiro.ondasegura.com.br/financeiro",
-                portal: "https://api-sandbox-portal.ondasegura.com.br"
-            }
+                portal: "https://api-sandbox-portal.ondasegura.com.br",
+            };
 
-            return servidor[this.servidor]
+            return servidor[this.servidor];
         }
     }
 
     public api = {
-        criar: async (props: TController['Criar']['Input']) => {
+        criar: async (props: TController["Criar"]["Input"]) => {
             try {
-                this.set_state((state_entidade) => { state_entidade.formulario.loading = true });
+                this.set_state((state_entidade) => {
+                    state_entidade.formulario.loading = true;
+                });
 
-                const data: TController['Criar']['Output'] = await utils.api.servidor_backend.post(this.acessar_servidor(), this.entidade, props, true);
+                const data: TController["Criar"]["Output"] = await utils.api.servidor_backend.post(this.acessar_servidor(), this.entidade, props, true);
 
                 const newItem = (data as any)?.results?.data?.[this.entidade];
 
                 if (newItem) {
                     this.set_state((state_entidade) => {
                         state_entidade.pagina = {
-                            itens: utils.update_context.update_array_itens({ oldArray: state_entidade.pagina.itens, newItem: newItem }),
+                            itens: utils.update_context.update_array_itens({oldArray: state_entidade.pagina.itens, newItem: newItem}),
                             loading: false,
                             paginacao: {
                                 itens_por_pagina: state_entidade.pagina.paginacao.itens_por_pagina + 1,
                                 total_itens: state_entidade.pagina.paginacao.total_itens + 1,
                                 total_itens_pagina_atual: state_entidade.pagina.paginacao.total_itens_pagina_atual + 1,
-                                total_paginas: state_entidade.pagina.paginacao.total_paginas
-                            }
+                                total_paginas: state_entidade.pagina.paginacao.total_paginas,
+                            },
                         };
                         state_entidade.pagina_mini_select = {
                             item_selecionado: newItem,
-                            itens: utils.update_context.update_array_itens({ oldArray: state_entidade.pagina.itens, newItem: newItem }),
+                            itens: utils.update_context.update_array_itens({oldArray: state_entidade.pagina.itens, newItem: newItem}),
                             loading: false,
                             paginacao: {
                                 itens_por_pagina: state_entidade.pagina.paginacao.itens_por_pagina + 1,
                                 total_itens: state_entidade.pagina.paginacao.total_itens + 1,
                                 total_itens_pagina_atual: state_entidade.pagina.paginacao.total_itens_pagina_atual + 1,
-                                total_paginas: state_entidade.pagina.paginacao.total_paginas
-                            }
+                                total_paginas: state_entidade.pagina.paginacao.total_paginas,
+                            },
                         };
                     });
                 }
-
             } finally {
-                if (this.get_state.pagina.loading !== true) this.set_state((state_entidade) => { state_entidade.pagina.loading = false })
+                if (this.get_state.pagina.loading !== true)
+                    this.set_state((state_entidade) => {
+                        state_entidade.pagina.loading = false;
+                    });
             }
         },
 
-        buscar_pelo_filtro: async (props: TController['BuscarPeloFiltro']['Input']) => {
+        buscar_pelo_filtro: async (props: TController["BuscarPeloFiltro"]["Input"]) => {
             this.set_state((state_entidade) => {
                 state_entidade.pagina.loading = true;
                 state_entidade.pagina_mini_select.loading = true;
             });
 
             try {
-                const data: TController['BuscarPeloFiltro']['Output'] = await utils.api.servidor_backend.get(
+                const data: TController["BuscarPeloFiltro"]["Output"] = await utils.api.servidor_backend.get(
                     this.acessar_servidor(),
                     this.entidade,
                     true,
                     (props as any)?.filtros?.[this.entidade] || {}
                 );
-                const results: TController['BuscarPeloFiltro']['Output'] = (data as any)?.results?.data;
+                const results: TController["BuscarPeloFiltro"]["Output"] = (data as any)?.results?.data;
 
                 if (results?.[this.entidade]) {
                     this.set_state((state_entidade) => {
@@ -212,8 +218,8 @@ class controller<TController extends ControllerActions, TEntidade extends string
                             paginacao: results?.paginacao,
                             itens: results?.[this.entidade] || [],
                             loading: false,
-                            item_selecionado: {}
-                        }
+                            item_selecionado: {},
+                        };
                     });
                 }
             } finally {
@@ -224,14 +230,14 @@ class controller<TController extends ControllerActions, TEntidade extends string
             }
         },
 
-        buscar_pelo_id: async (props: TController['BuscarPeloId']['Input']) => {
+        buscar_pelo_id: async (props: TController["BuscarPeloId"]["Input"]) => {
             try {
                 this.set_state((state_entidade) => {
                     state_entidade.formulario.loading = true;
                     state_entidade.modal.loading = true;
                 });
 
-                const data: TController['BuscarPeloId']['Output'] = await utils.api.servidor_backend.get(
+                const data: TController["BuscarPeloId"]["Output"] = await utils.api.servidor_backend.get(
                     this.acessar_servidor(),
                     `${this.entidade}/${(props as any).data._id}`,
                     true,
@@ -246,11 +252,14 @@ class controller<TController extends ControllerActions, TEntidade extends string
                     });
                 }
             } finally {
-                this.set_state((state_entidade) => { state_entidade.formulario.loading = false; state_entidade.modal.loading = false })
+                this.set_state((state_entidade) => {
+                    state_entidade.formulario.loading = false;
+                    state_entidade.modal.loading = false;
+                });
             }
         },
 
-        atualizar_pelo_id: async (props: TController['AtualizarPeloId']['Input']) => {
+        atualizar_pelo_id: async (props: TController["AtualizarPeloId"]["Input"]) => {
             try {
                 this.set_state((state_entidade) => {
                     state_entidade.formulario.loading = true;
@@ -258,10 +267,10 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 });
 
                 const id = (props as any).data[this.entidade]._id;
-                const data: TController['AtualizarPeloId']['Output'] = await utils.api.servidor_backend.patch(
+                const data: TController["AtualizarPeloId"]["Output"] = await utils.api.servidor_backend.patch(
                     this.acessar_servidor(),
                     `${this.entidade}/${id}`,
-                    { data: (props as any).data },
+                    {data: (props as any).data},
                     true
                 );
                 const updatedItem = (data as any)?.results?.data?.[this.entidade];
@@ -269,7 +278,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 if (updatedItem) {
                     const update_itens = utils.update_context.update_array_itens({
                         oldArray: this.get_state.pagina.itens,
-                        newItem: updatedItem
+                        newItem: updatedItem,
                     });
                     this.set_state((state_entidade) => {
                         state_entidade.pagina.itens = update_itens;
@@ -283,7 +292,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
             }
         },
 
-        deletar_pelo_id: async (props: TController['DeletarPeloId']['Input']) => {
+        deletar_pelo_id: async (props: TController["DeletarPeloId"]["Input"]) => {
             try {
                 this.set_state((state_entidade) => {
                     state_entidade.modal.loading = true;
@@ -293,7 +302,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
 
                 const update_itens = utils.update_context.remover_item_pelo_id({
                     oldArray: this.get_state.pagina.itens as [],
-                    itemToRemove: { _id: props.data._id }
+                    itemToRemove: {_id: props.data._id},
                 });
 
                 this.set_state((state_entidade) => {
@@ -304,21 +313,23 @@ class controller<TController extends ControllerActions, TEntidade extends string
                             itens_por_pagina: state_entidade.pagina.paginacao.itens_por_pagina - 1,
                             total_itens: state_entidade.pagina.paginacao.total_itens - 1,
                             total_itens_pagina_atual: state_entidade.pagina.paginacao.total_itens_pagina_atual - 1,
-                            total_paginas: state_entidade.pagina.paginacao.total_paginas
-                        }
+                            total_paginas: state_entidade.pagina.paginacao.total_paginas,
+                        },
                     };
                 });
             } finally {
-                this.set_state((state_entidade) => { state_entidade.modal.loading = false });
+                this.set_state((state_entidade) => {
+                    state_entidade.modal.loading = false;
+                });
             }
-        }
+        },
     };
 
-    public get get_jsx(): TController['states'] {
+    public get get_jsx(): TController["states"] {
         return store().states[this.entidade] || criar_entidade_virtual();
     }
 
-    public get get_state(): TController['states'] {
+    public get get_state(): TController["states"] {
         return store.getState().states[this.entidade] || criar_entidade_virtual();
     }
 
@@ -332,4 +343,4 @@ class controller<TController extends ControllerActions, TEntidade extends string
     };
 }
 
-export default controller
+export default controller;
