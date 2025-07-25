@@ -6,7 +6,7 @@ type Env = "producao" | "desenvolvimento";
 
 const PUBLIC_NODE_ENV: Env = process.env.PUBLIC_NODE_ENV as Env;
 
-type Servidores = "wave" | "worker_financeiro" | "portal";
+type Servidores = "wave" | "worker_financeiro" | "portal" | "banco";
 
 interface EntityState {
     modal: {
