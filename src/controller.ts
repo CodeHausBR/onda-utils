@@ -131,6 +131,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 wave: "https://api-wave.ondasegura.com.br",
                 worker_financeiro: "https://api-financeiro.ondasegura.com.br/financeiro",
                 portal: "https://api-portal.ondasegura.com.br",
+                banco: "https://api-sandbox-banco.ondasegura.com.br", //url fictícia para arrumar erro na build da lib
             };
 
             return servidor[this.servidor];
@@ -140,6 +141,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 wave: "https://api-sandbox-wave.ondasegura.com.br",
                 worker_financeiro: "https://api-sandbox-financeiro.ondasegura.com.br/financeiro",
                 portal: "https://api-sandbox-portal.ondasegura.com.br",
+                banco: "https://api-sandbox-banco.ondasegura.com.br", //url fictícia para arrumar erro na build da lib
             };
 
             return servidor[this.servidor];
