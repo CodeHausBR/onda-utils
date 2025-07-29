@@ -129,9 +129,9 @@ class controller<TController extends ControllerActions, TEntidade extends string
             //PRODUCAO
             const servidor = {
                 wave: "https://api-wave.ondasegura.com.br",
-                worker_financeiro: "https://api-financeiro.ondasegura.com.br/financeiro",
+                worker_financeiro: "https://api.codehaus.app/financeiro",
                 portal: "https://api-portal.ondasegura.com.br",
-                banco: "https://api-sandbox-banco.ondasegura.com.br", //url fictícia para arrumar erro na build da lib
+                banco: "https://api-banco.ondasegura.com.br",
             };
 
             return servidor[this.servidor];
@@ -139,9 +139,9 @@ class controller<TController extends ControllerActions, TEntidade extends string
             //SANDBOX
             const servidor = {
                 wave: "https://api-sandbox-wave.ondasegura.com.br",
-                worker_financeiro: "https://api-sandbox-financeiro.ondasegura.com.br/financeiro",
+                worker_financeiro: "https://api.codehaus.app/financeiro",
                 portal: "https://api-sandbox-portal.ondasegura.com.br",
-                banco: "https://api-sandbox-banco.ondasegura.com.br", //url fictícia para arrumar erro na build da lib
+                banco: "https://api-sandbox-banco.ondasegura.com.br",
             };
 
             return servidor[this.servidor];
