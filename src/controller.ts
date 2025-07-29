@@ -129,7 +129,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
             //PRODUCAO
             const servidor = {
                 wave: "https://api-wave.ondasegura.com.br",
-                worker_financeiro: "https://api.codehaus.app/financeiro",
+                worker_financeiro: "https://api-financeiro.codehaus.app/financeiro",
                 portal: "https://api-portal.ondasegura.com.br",
                 banco: "https://api-banco.ondasegura.com.br",
             };
@@ -139,7 +139,7 @@ class controller<TController extends ControllerActions, TEntidade extends string
             //SANDBOX
             const servidor = {
                 wave: "https://api-sandbox-wave.ondasegura.com.br",
-                worker_financeiro: "https://api-sandbox.codehaus.app/financeiro",
+                worker_financeiro: "https://api-sandbox-financeiro.codehaus.app/financeiro",
                 portal: "https://api-sandbox-portal.ondasegura.com.br",
                 banco: "https://api-sandbox-banco.ondasegura.com.br",
             };
