@@ -4,7 +4,7 @@ import utils from "..";
 
 type Env = "producao" | "desenvolvimento";
 
-const PUBLIC_NODE_ENV: Env = process?.env?.PUBLIC_NODE_ENV as Env;
+const PUBLIC_NODE_ENV = process.env.PUBLIC_NODE_ENV as Env;
 
 type Servidores = "wave" | "worker_financeiro" | "portal" | "banco";
 
