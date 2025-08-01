@@ -4,7 +4,7 @@ import utils from "..";
 
 type Env = "producao" | "desenvolvimento";
 
-const PUBLIC_NODE_ENV: Env = process.env.PUBLIC_NODE_ENV as Env;
+const PUBLIC_NODE_ENV: Env = process?.env?.PUBLIC_NODE_ENV as Env;
 
 type Servidores = "wave" | "worker_financeiro" | "portal" | "banco";
 
@@ -134,6 +134,15 @@ class controller<TController extends ControllerActions, TEntidade extends string
                 banco: "https://api-banco.ondasegura.com.br",
             };
 
+            return servidor[this.servidor];
+        } else if (PUBLIC_NODE_ENV?.toLowerCase() === "localhost") {
+            //LOCAHOST
+            const servidor = {
+                wave: "https://api-wave.ondasegura.com.br",
+                worker_financeiro: "http://127.0.0.1/8787",
+                portal: "https://api-portal.ondasegura.com.br",
+                banco: "https://api-banco.ondasegura.com.br",
+            };
             return servidor[this.servidor];
         } else {
             //SANDBOX
